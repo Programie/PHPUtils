@@ -42,4 +42,9 @@ class URLTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertEquals("custom://example.com:8000", URL::buildUrl(parse_url("custom://example.com:8000")));
 	}
+
+	public function testGetRootUrl()
+	{
+		$this->assertEquals("https://example.com", URL::getRootUrl());
+	}
 }

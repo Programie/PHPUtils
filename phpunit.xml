@@ -3,4 +3,8 @@
 	<testsuite>
 		<directory>src/test/php</directory>
 	</testsuite>
+	<php>
+		<server name="HTTPS" value="on"/>
+		<server name="HTTP_HOST" value="example.com"/>
+	</php>
 </phpunit>

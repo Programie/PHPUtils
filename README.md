@@ -1,2 +1,3 @@
 # PHPUtils
-A collection of PHP utility functions
+
+A collection of PHP utility functions.

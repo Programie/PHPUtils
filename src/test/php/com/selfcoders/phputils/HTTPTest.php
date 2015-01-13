@@ -5,7 +5,7 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 {
 	public function testParseHeader()
 	{
-		$content = array
+		$content = implode("\r\n", array
 		(
 			"HTTP/1.1 200 OK",
 			"Date: Tue, 13 Jan 2015 18:03:55 GMT",
@@ -15,9 +15,14 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 			"Set-Cookie: myCookie=myValue=1; expires=Thu, 12-Jan-2017 18:03:55 GMT; path=/; domain=.example.com; secure",
 			"Set-Cookie: myOtherCookie=another value; expires=Wed, 15-Jul-2015 18:03:55 GMT; path=/; domain=.example.com; HttpOnly",
 			"Server: Apache"
-		);
+		));
 
-		$header = HTTP::parseHeader(implode("\r\n", $content));
+		$headerLowerCase = HTTP::parseHeader($content, true);
+
+		$this->assertTrue(isset($headerLowerCase->cookies["mycookie"]));
+		$this->assertTrue(isset($headerLowerCase->headers["date"]));
+
+		$header = HTTP::parseHeader($content);
 
 		$this->assertInternalType("array", $header->cookies);
 		$this->assertInternalType("array", $header->headers);

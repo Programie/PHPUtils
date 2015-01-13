@@ -13,9 +13,4 @@ class FormatTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("1 C", Format::getHumanReadableUnit(10 * 10, $factor, $units));
 		$this->assertEquals("10 C", Format::getHumanReadableUnit(10 * 10 * 10, $factor, $units));
 	}
-
-	public function testGetHumanReadableUnitNonEmpty()
-	{
-		$this->assertNotEquals("", Format::getHumanReadableUnit(10000000000, 10, array("A")));
-	}
 }

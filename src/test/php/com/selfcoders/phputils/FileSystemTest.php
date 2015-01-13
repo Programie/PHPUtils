@@ -10,5 +10,7 @@ class FileSystemTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("2.5 MB", FileSystem::formatFileSize(1024 * 1024 * 2.5));
 		$this->assertEquals("1 GB", FileSystem::formatFileSize(1024 * 1024 * 1024));
 		$this->assertEquals("5 TB", FileSystem::formatFileSize(1024 * 1024 * 1024 * 1024 * 5));
+		$this->assertEquals("1024 TB", FileSystem::formatFileSize(1024 * 1024 * 1024 * 1024 * 1024));
+		$this->assertEquals("2048 TB", FileSystem::formatFileSize(1024 * 1024 * 1024 * 1024 * 1024 * 2));
 	}
 }

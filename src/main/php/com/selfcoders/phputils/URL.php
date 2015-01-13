@@ -12,15 +12,13 @@ class URL
 	 */
 	public static function buildUrl($url)
 	{
-		$scheme = $url["scheme"];
-		if (!$scheme)
-		{
-			$scheme = "http";
-		}
-
 		$fullUrl = "";
-		$fullUrl .= $scheme;
-		$fullUrl .= "://";
+
+		if (isset($url["scheme"]))
+		{
+			$fullUrl .= $url["scheme"];
+			$fullUrl .= "://";
+		}
 
 		if (isset($url["user"]))
 		{
@@ -33,34 +31,29 @@ class URL
 			$fullUrl .= "@";
 		}
 
-		$fullUrl .= $url["host"];
-
-		$defaultPort = null;
-		switch ($scheme)
+		if (isset($url["host"]))
 		{
-			case "http":
-				$defaultPort = 80;
-				break;
-			case "https":
-				$defaultPort = 443;
-				break;
+			$fullUrl .= $url["host"];
 		}
 
-		if ($defaultPort and isset($url["port"]) and $url["port"] != $defaultPort)
+		if (isset($url["port"]))
 		{
 			$fullUrl .= ":";
 			$fullUrl .= $url["port"];
 		}
 
-		$fullUrl .= $url["path"];
+		if (isset($url["path"]))
+		{
+			$fullUrl .= $url["path"];
+		}
 
-		if ($url["query"])
+		if (isset($url["query"]))
 		{
 			$fullUrl .= "?";
 			$fullUrl .= $url["query"];
 		}
 
-		if ($url["fragment"])
+		if (isset($url["fragment"]))
 		{
 			$fullUrl .= "#";
 			$fullUrl .= $url["fragment"];

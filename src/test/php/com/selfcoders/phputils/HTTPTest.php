@@ -65,11 +65,15 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 	{
 		$content = implode("\r\n", array
 		(
+			"HTTP/1.1 301 Moved Permanently",
+			"Date: Tue, 13 Jan 2015 18:03:53 GMT",
+			"Server: Apache",
+			"Location: https://example.com",
+			"",
 			"HTTP/1.1 302 Found",
 			"Date: Tue, 13 Jan 2015 18:03:54 GMT",
 			"Server: Apache",
 			"Location: https://example.com/some-other-location",
-			"Content-Length: 0",
 			"",
 			"HTTP/1.1 200 OK",
 			"Date: Tue, 13 Jan 2015 18:03:55 GMT",
@@ -83,13 +87,17 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 
 		$header = HTTP::parseHeader($content, true);
 
-		$this->assertEquals("Tue, 13 Jan 2015 18:03:54 GMT", $header[0]->headers["date"]);
-		$this->assertEquals("Tue, 13 Jan 2015 18:03:55 GMT", $header[1]->headers["date"]);
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:53 GMT", $header[0]->headers["date"]);
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:54 GMT", $header[1]->headers["date"]);
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:55 GMT", $header[2]->headers["date"]);
 
 		$this->assertEquals("1.1", $header[0]->version);
-		$this->assertEquals(302, $header[0]->statusCode);
+		$this->assertEquals(301, $header[0]->statusCode);
 
 		$this->assertEquals("1.1", $header[1]->version);
-		$this->assertEquals(200, $header[1]->statusCode);
+		$this->assertEquals(302, $header[1]->statusCode);
+
+		$this->assertEquals("1.1", $header[2]->version);
+		$this->assertEquals(200, $header[2]->statusCode);
 	}
 }

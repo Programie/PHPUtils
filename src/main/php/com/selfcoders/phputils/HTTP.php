@@ -9,52 +9,72 @@ class HTTP
 	 * @param string $content The raw header content
 	 * @param bool $lowerCase Whether cookies and headers should be referenced using a lower case key
 	 *
-	 * @return HTTPHeader An instance of the HTTPHeader class containing the parsed data
+	 * @return array An array of instances of the HTTPHeader class containing the parsed data (One instance per header part)
 	 */
 	public static function parseHeader($content, $lowerCase = false)
 	{
-		$data = new HTTPHeader();
+		$data = array();
 
-		$content = explode("\r\n", $content);
+		$headers = explode("\r\n\r\n", $content);
 
-		foreach ($content as $line)
+		foreach ($headers as $header)
 		{
-			$headerLine = explode(":", trim($line), 2);
+			$header = explode("\r\n", $header);
 
-			if (count($headerLine) < 2)
+			$headerInstance = new HTTPHeader();
+
+			foreach ($header as $lineIndex => $line)
 			{
-				continue;
-			}
-
-			list($headerKey, $headerValue) = $headerLine;
-
-			$headerKey = trim($headerKey);
-
-			if (strtolower($headerKey) == "set-cookie")
-			{
-				$cookie = new HTTPCookie();
-				$cookie->parse($headerValue);
-
-				if ($lowerCase)
+				if ($lineIndex == 0)
 				{
-					$key = strtolower($cookie->name);
+					if (preg_match("/^HTTP\/([0-9\.]+) ([0-9]+)/", $line, $matches))
+					{
+						$headerInstance->version = $matches[1];
+						$headerInstance->statusCode = (int) $matches[2];
+					}
+
+					continue;
+				}
+
+				$headerLine = explode(":", trim($line), 2);
+
+				if (count($headerLine) < 2)
+				{
+					continue;
+				}
+
+				list($headerKey, $headerValue) = $headerLine;
+
+				$headerKey = trim($headerKey);
+
+				if (strtolower($headerKey) == "set-cookie")
+				{
+					$cookie = new HTTPCookie();
+					$cookie->parse($headerValue);
+
+					if ($lowerCase)
+					{
+						$key = strtolower($cookie->name);
+					}
+					else
+					{
+						$key = $cookie->name;
+					}
+
+					$headerInstance->cookies[$key] = $cookie;
 				}
 				else
 				{
-					$key = $cookie->name;
-				}
+					if ($lowerCase)
+					{
+						$headerKey = strtolower($headerKey);
+					}
 
-				$data->cookies[$key] = $cookie;
-			}
-			else
-			{
-				if ($lowerCase)
-				{
-					$headerKey = strtolower($headerKey);
+					$headerInstance->headers[$headerKey] = trim($headerValue);
 				}
-
-				$data->headers[$headerKey] = trim($headerValue);
 			}
+
+			$data[] = $headerInstance;
 		}
 
 		return $data;

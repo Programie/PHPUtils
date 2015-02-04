@@ -19,18 +19,21 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 
 		$headerLowerCase = HTTP::parseHeader($content, true);
 
-		$this->assertTrue(isset($headerLowerCase->cookies["mycookie"]));
-		$this->assertTrue(isset($headerLowerCase->headers["date"]));
+		$this->assertTrue(isset($headerLowerCase[0]->cookies["mycookie"]));
+		$this->assertTrue(isset($headerLowerCase[0]->headers["date"]));
 
 		$header = HTTP::parseHeader($content);
 
-		$this->assertInternalType("array", $header->cookies);
-		$this->assertInternalType("array", $header->headers);
+		$this->assertInternalType("array", $header[0]->cookies);
+		$this->assertInternalType("array", $header[0]->headers);
+
+		$this->assertEquals("1.1", $header[0]->version);
+		$this->assertEquals(200, $header[0]->statusCode);
 
 		/**
 		 * @var HTTPCookie $myCookie
 		 */
-		$myCookie = $header->cookies["myCookie"];
+		$myCookie = $header[0]->cookies["myCookie"];
 
 		$this->assertEquals("myCookie", $myCookie->name);
 		$this->assertEquals("myValue=1", $myCookie->value);
@@ -41,7 +44,7 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 		/**
 		 * @var HTTPCookie $myOtherCookie
 		 */
-		$myOtherCookie = $header->cookies["myOtherCookie"];
+		$myOtherCookie = $header[0]->cookies["myOtherCookie"];
 
 		$this->assertEquals("myOtherCookie", $myOtherCookie->name);
 		$this->assertEquals("another value", $myOtherCookie->value);
@@ -50,11 +53,43 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 		$this->assertFalse($myOtherCookie->secure);
 
 		// Test some header fields
-		$this->assertEquals("Tue, 13 Jan 2015 18:03:55 GMT", $header->headers["Date"]);
-		$this->assertEquals("-1", $header->headers["Expires"]);
-		$this->assertEquals("private, max-age=0", $header->headers["Cache-Control"]);
-		$this->assertEquals("text/html; charset=ISO-8859-1", $header->headers["Content-Type"]);
-		$this->assertEquals("Apache", $header->headers["Server"]);
-		$this->assertFalse(isset($header->headers["Set-Cookie"]));// Set-Cookie field should not exist (it's parsed into the cookies array)
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:55 GMT", $header[0]->headers["Date"]);
+		$this->assertEquals("-1", $header[0]->headers["Expires"]);
+		$this->assertEquals("private, max-age=0", $header[0]->headers["Cache-Control"]);
+		$this->assertEquals("text/html; charset=ISO-8859-1", $header[0]->headers["Content-Type"]);
+		$this->assertEquals("Apache", $header[0]->headers["Server"]);
+		$this->assertFalse(isset($header[0]->headers["Set-Cookie"]));// Set-Cookie field should not exist (it's parsed into the cookies array)
+	}
+
+	public function testParseMultipleHeaders()
+	{
+		$content = implode("\r\n", array
+		(
+			"HTTP/1.1 302 Found",
+			"Date: Tue, 13 Jan 2015 18:03:54 GMT",
+			"Server: Apache",
+			"Location: https://example.com/some-other-location",
+			"Content-Length: 0",
+			"",
+			"HTTP/1.1 200 OK",
+			"Date: Tue, 13 Jan 2015 18:03:55 GMT",
+			"Expires: -1",
+			"Cache-Control: private, max-age=0",
+			"Content-Type: text/html; charset=ISO-8859-1",
+			"Set-Cookie: myCookie=myValue=1; expires=Thu, 12-Jan-2017 18:03:55 GMT; path=/; domain=.example.com; secure",
+			"Set-Cookie: myOtherCookie=another value; expires=Wed, 15-Jul-2015 18:03:55 GMT; path=/; domain=.example.com; HttpOnly",
+			"Server: Apache"
+		));
+
+		$header = HTTP::parseHeader($content, true);
+
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:54 GMT", $header[0]->headers["date"]);
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:55 GMT", $header[1]->headers["date"]);
+
+		$this->assertEquals("1.1", $header[0]->version);
+		$this->assertEquals(302, $header[0]->statusCode);
+
+		$this->assertEquals("1.1", $header[1]->version);
+		$this->assertEquals(200, $header[1]->statusCode);
 	}
 }

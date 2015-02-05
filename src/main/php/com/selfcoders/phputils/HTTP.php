@@ -19,6 +19,13 @@ class HTTP
 
 		foreach ($headers as $header)
 		{
+			$header = trim($header);
+
+			if (!$header)
+			{
+				continue;
+			}
+
 			$header = explode("\r\n", $header);
 
 			$headerInstance = new HTTPHeader();

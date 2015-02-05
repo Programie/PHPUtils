@@ -59,6 +59,8 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals("text/html; charset=ISO-8859-1", $header[0]->headers["Content-Type"]);
 		$this->assertEquals("Apache", $header[0]->headers["Server"]);
 		$this->assertFalse(isset($header[0]->headers["Set-Cookie"]));// Set-Cookie field should not exist (it's parsed into the cookies array)
+
+		$this->assertFalse(isset($header[1]));
 	}
 
 	public function testParseMultipleHeaders()
@@ -99,5 +101,7 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals("1.1", $header[2]->version);
 		$this->assertEquals(200, $header[2]->statusCode);
+
+		$this->assertFalse(isset($header[3]));
 	}
 }

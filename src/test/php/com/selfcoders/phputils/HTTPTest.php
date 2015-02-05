@@ -29,6 +29,7 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals("1.1", $header[0]->version);
 		$this->assertEquals(200, $header[0]->statusCode);
+		$this->assertEquals("OK", $header[0]->statusText);
 
 		/**
 		 * @var HTTPCookie $myCookie
@@ -95,13 +96,70 @@ class HTTPTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals("1.1", $header[0]->version);
 		$this->assertEquals(301, $header[0]->statusCode);
+		$this->assertEquals("Moved Permanently", $header[0]->statusText);
 
 		$this->assertEquals("1.1", $header[1]->version);
 		$this->assertEquals(302, $header[1]->statusCode);
+		$this->assertEquals("Found", $header[1]->statusText);
 
 		$this->assertEquals("1.1", $header[2]->version);
 		$this->assertEquals(200, $header[2]->statusCode);
+		$this->assertEquals("OK", $header[2]->statusText);
 
 		$this->assertFalse(isset($header[3]));
+	}
+
+	public function testParseHeadersProxy()
+	{
+		$content = implode("\r\n", array
+		(
+			"HTTP/1.0 200 Connection established",
+			"",
+			"HTTP/1.1 301 Moved Permanently",
+			"Date: Tue, 13 Jan 2015 18:03:53 GMT",
+			"Server: Apache",
+			"Location: https://example.com",
+			"",
+			"HTTP/1.1 302 Found",
+			"Date: Tue, 13 Jan 2015 18:03:54 GMT",
+			"Server: Apache",
+			"Location: https://example.com/some-other-location",
+			"",
+			"HTTP/1.1 200 OK",
+			"Date: Tue, 13 Jan 2015 18:03:55 GMT",
+			"Expires: -1",
+			"Cache-Control: private, max-age=0",
+			"Content-Type: text/html; charset=ISO-8859-1",
+			"Set-Cookie: myCookie=myValue=1; expires=Thu, 12-Jan-2017 18:03:55 GMT; path=/; domain=.example.com; secure",
+			"Set-Cookie: myOtherCookie=another value; expires=Wed, 15-Jul-2015 18:03:55 GMT; path=/; domain=.example.com; HttpOnly",
+			"Server: Apache"
+		));
+
+		$header = HTTP::parseHeader($content, true);
+
+		$this->assertTrue(empty($header[0]->headers));
+		$this->assertTrue(empty($header[0]->cookies));
+
+		$this->assertEquals("1.0", $header[0]->version);
+		$this->assertEquals(200, $header[0]->statusCode);
+		$this->assertEquals("Connection established", $header[0]->statusText);
+
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:53 GMT", $header[1]->headers["date"]);
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:54 GMT", $header[2]->headers["date"]);
+		$this->assertEquals("Tue, 13 Jan 2015 18:03:55 GMT", $header[3]->headers["date"]);
+
+		$this->assertEquals("1.1", $header[1]->version);
+		$this->assertEquals(301, $header[1]->statusCode);
+		$this->assertEquals("Moved Permanently", $header[1]->statusText);
+
+		$this->assertEquals("1.1", $header[2]->version);
+		$this->assertEquals(302, $header[2]->statusCode);
+		$this->assertEquals("Found", $header[2]->statusText);
+
+		$this->assertEquals("1.1", $header[3]->version);
+		$this->assertEquals(200, $header[3]->statusCode);
+		$this->assertEquals("OK", $header[3]->statusText);
+
+		$this->assertFalse(isset($header[4]));
 	}
 }

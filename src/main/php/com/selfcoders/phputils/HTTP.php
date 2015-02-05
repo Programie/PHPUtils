@@ -34,10 +34,11 @@ class HTTP
 			{
 				if ($lineIndex == 0)
 				{
-					if (preg_match("/^HTTP\/([0-9\.]+) ([0-9]+)/", $line, $matches))
+					if (preg_match("/^HTTP\/([0-9\.]+) ([0-9]+) (.*)/", $line, $matches))
 					{
 						$headerInstance->version = $matches[1];
 						$headerInstance->statusCode = (int) $matches[2];
+						$headerInstance->statusText = $matches[3];
 					}
 
 					continue;

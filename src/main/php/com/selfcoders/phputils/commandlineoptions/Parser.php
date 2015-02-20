@@ -70,4 +70,14 @@ class Parser
 
 		return $this->options[$name][$index];
 	}
+
+	/**
+	 * Get an array of all options.
+	 *
+	 * @return array An array containing another array for each option name containing all Option instances.
+	 */
+	public function getOptions()
+	{
+		return $this->options;
+	}
 }

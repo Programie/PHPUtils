@@ -6,7 +6,7 @@ class HTTP
 	/**
 	 * Parse the header content and return a new instance of the HTTPHeader class.
 	 *
-	 * @param string $content The raw header content
+	 * @param string|array $content The raw header content
 	 * @param bool $lowerCase Whether cookies and headers should be referenced using a lower case key
 	 *
 	 * @return array An array of instances of the HTTPHeader class containing the parsed data (One instance per header part)
@@ -15,9 +15,12 @@ class HTTP
 	{
 		$data = array();
 
-		$headers = explode("\r\n\r\n", $content);
+		if (!is_array($content))
+		{
+			$content = explode("\r\n\r\n", $content);
+		}
 
-		foreach ($headers as $header)
+		foreach ($content as $header)
 		{
 			$header = trim($header);
 

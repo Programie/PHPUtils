@@ -4,7 +4,7 @@ namespace com\selfcoders\phputils;
 class Format
 {
 	/**
-	 * Convert the specified number into a human readable unit
+	 * Convert the specified number into a human readable unit.
 	 *
 	 * @param int $value The value to convert
 	 * @param array $units An array of units to use
@@ -26,5 +26,49 @@ class Format
 		}
 
 		return "";
+	}
+
+	/**
+	 * Convert the given number of seconds into a human readable format.
+	 *
+	 * @param int $seconds The seconds to convert
+	 *
+	 * @return string A string in format "hh:ii:ss", "x day hh:ii:ss" or "x days hh:ii:ss"
+	 */
+	public static function formatTime($seconds)
+	{
+		$days = floor($seconds / 60 / 60 / 24);
+		$seconds -= $days * 60 * 60 * 24;
+
+		$hours = floor($seconds / 60 / 60);
+		$seconds -= $hours * 60 * 60;
+
+		$minutes = floor($seconds / 60);
+		$seconds -= $minutes * 60;
+
+		$string = "";
+
+		if ($days)
+		{
+			if ($days == 1)
+			{
+				$string .= "1 day";
+			}
+			else
+			{
+				$string .= $days . " days";
+			}
+
+			$string .= " ";
+		}
+
+		$string .= implode(":", array
+		(
+			str_pad($hours, 2, "0", STR_PAD_LEFT),
+			str_pad($minutes, 2, "0", STR_PAD_LEFT),
+			str_pad($seconds, 2, "0", STR_PAD_LEFT)
+		));
+
+		return $string;
 	}
 }

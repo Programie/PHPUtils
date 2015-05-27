@@ -1,8 +1,6 @@
 <?php
 namespace com\selfcoders\phputils\commandlineoptions;
 
-require_once __DIR__ . "/Option.php";
-
 class Parser
 {
 	/**

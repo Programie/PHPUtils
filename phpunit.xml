@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit bootstrap="vendor/autoload.php">
-	<testsuite>
-		<directory>src/test/php</directory>
-	</testsuite>
-	<php>
-		<server name="HTTPS" value="on"/>
-		<server name="HTTP_HOST" value="example.com"/>
-	</php>
+  <testsuite>
+    <directory>src/test/php</directory>
+  </testsuite>
+  <php>
+    <server name="HTTPS" value="on"/>
+    <server name="HTTP_HOST" value="example.com"/>
+  </php>
 </phpunit>

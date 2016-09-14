@@ -1,24 +1,26 @@
 {
-	"name" : "programie/phputils",
-	"description" : "A collection of PHP utility functions",
-	"minimum-stability" : "stable",
-	"license" : "MIT",
-	"authors" : [
-		{
-			"name": "Michael Wieland",
-			"email": "phputils@selfcoders.com",
-			"homepage": "http://selfcoders.com",
-			"role": "Developer"
-		}
-	],
-	"require" : {
-		"php" : ">=5.4"
-	},
-	"require-dev" : {
-		"phpunit/phpunit": "4.4.0",
-		"satooshi/php-coveralls": "dev-master"
-	},
-	"autoload": {
-		"psr-4": {"" : "src/main/php"}
-	}
+    "name": "programie/phputils",
+    "description": "A collection of PHP utility functions",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Wieland",
+            "email": "phputils@selfcoders.com",
+            "homepage": "http://selfcoders.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/main/php"
+        }
+    }
 }

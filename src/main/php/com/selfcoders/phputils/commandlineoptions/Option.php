@@ -3,7 +3,13 @@ namespace com\selfcoders\phputils\commandlineoptions;
 
 class Option
 {
+    /**
+     * @var string
+     */
     public $name;
+    /**
+     * @var string
+     */
     public $value;
 
     public function __construct($option)

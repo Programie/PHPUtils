@@ -28,6 +28,11 @@ class HTTPCookie
      */
     public $secure = false;
 
+    /**
+     * Parse the content of the SetCookie HTTP header field.
+     *
+     * @param string $string The value of the SetCookie HTTP header field (e.g. "myCookie=myValue=1; expires=Thu, 12-Jan-2017 18:03:55 GMT; path=/; domain=.example.com; secure")
+     */
     public function parse($string)
     {
         foreach (explode(";", $string) as $index => $field) {

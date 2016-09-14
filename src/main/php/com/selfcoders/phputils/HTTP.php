@@ -9,7 +9,7 @@ class HTTP
      * @param string|array $content The raw header content
      * @param bool $lowerCase Whether cookies and headers should be referenced using a lower case key
      *
-     * @return array An array of instances of the HTTPHeader class containing the parsed data (One instance per header part)
+     * @return HTTPHeader[] An array of HTTPHeader instances containing the parsed data (One instance per header part)
      */
     public static function parseHeader($content, $lowerCase = false)
     {

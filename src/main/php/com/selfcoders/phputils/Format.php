@@ -10,7 +10,7 @@ class Format
      * @param array $units An array of units to use
      * @param int $factor The factor to use for each unit
      *
-     * @return string The value in format"<Value> <Unit> (e.g. 100 MB)
+     * @return string The value in format "<Value> <Unit>" (e.g. 100 MB)
      */
     public static function getHumanReadableUnit($value, $factor, $units)
     {

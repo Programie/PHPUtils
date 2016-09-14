@@ -2,7 +2,7 @@
 	"name" : "programie/phputils",
 	"description" : "A collection of PHP utility functions",
 	"minimum-stability" : "stable",
-	"license" : "",
+	"license" : "MIT",
 	"authors" : [
 		{
 			"name": "Michael Wieland",

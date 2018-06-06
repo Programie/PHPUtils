@@ -2,8 +2,8 @@
 
 A collection of PHP utility functions.
 
-[![Build Status](https://travis-ci.org/Programie/PHPUtils.svg)](https://travis-ci.org/Programie/PHPUtils)
-[![Coverage Status](https://img.shields.io/coveralls/Programie/PHPUtils.svg)](https://coveralls.io/r/Programie/PHPUtils?branch=master)
+[![pipeline status](https://gitlab.com/Programie/PHPUtils/badges/master/pipeline.svg)](https://gitlab.com/Programie/PHPUtils/commits/master)
+[![coverage report](https://gitlab.com/Programie/PHPUtils/badges/master/coverage.svg)](https://gitlab.com/Programie/PHPUtils/commits/master)
 [![License](https://poser.pugx.org/programie/phputils/license.svg)](https://packagist.org/packages/programie/phputils)
 [![Latest Stable Version](https://poser.pugx.org/programie/phputils/v/stable.svg)](https://packagist.org/packages/programie/phputils)
 [![Latest Unstable Version](https://poser.pugx.org/programie/phputils/v/unstable.svg)](https://packagist.org/packages/programie/phputils)

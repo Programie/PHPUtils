@@ -1,9 +1,9 @@
 <?php
 namespace com\selfcoders\phputils\commandlineoptions;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class OptionTest extends PHPUnit_Framework_TestCase
+class OptionTest extends TestCase
 {
     public function testParseKeyValue()
     {

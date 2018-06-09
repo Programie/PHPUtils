@@ -1,9 +1,10 @@
 <?php
 namespace com\selfcoders\phputils\commandlineoptions;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\Constraint\IsType;
+use PHPUnit\Framework\TestCase;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends TestCase
 {
     public function testGetOptions()
     {
@@ -24,8 +25,8 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals("value without option", $parser->getOption("", 0)->value);
 
-        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $parser->getOptions());
-        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $parser->getOptions()["-a"]);
+        $this->assertInternalType(IsType::TYPE_ARRAY, $parser->getOptions());
+        $this->assertInternalType(IsType::TYPE_ARRAY, $parser->getOptions()["-a"]);
         $this->assertInstanceOf("com\\selfcoders\\phputils\\commandlineoptions\\Option", $parser->getOptions()["-a"][0]);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 namespace com\selfcoders\phputils;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class HTTPCookieTest extends PHPUnit_Framework_TestCase
+class HTTPCookieTest extends TestCase
 {
     public function testParse()
     {

@@ -1,9 +1,9 @@
 <?php
 namespace com\selfcoders\phputils;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class HTTPTest extends PHPUnit_Framework_TestCase
+class HTTPTest extends TestCase
 {
     public function testParseHeader()
     {

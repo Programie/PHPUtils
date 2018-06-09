@@ -1,9 +1,9 @@
 <?php
 namespace com\selfcoders\phputils;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FileSystemTest extends PHPUnit_Framework_TestCase
+class FileSystemTest extends TestCase
 {
     public function testFormatFileSize()
     {

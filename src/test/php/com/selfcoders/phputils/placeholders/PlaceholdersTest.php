@@ -1,9 +1,9 @@
 <?php
 namespace com\selfcoders\phputils\placeholders;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PlaceholdersTest extends PHPUnit_Framework_TestCase
+class PlaceholdersTest extends TestCase
 {
     public function testSingle()
     {

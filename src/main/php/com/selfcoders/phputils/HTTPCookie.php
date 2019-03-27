@@ -68,7 +68,7 @@ class HTTPCookie
                     break;
                 case "secure":
                     $this->secure = true;
-                    continue;
+                    break;
             }
         }
     }

@@ -77,12 +77,21 @@ class Placeholders extends ArrayObject
 
     /**
      * @param $string
+     * @param int $recursions
      * @return mixed
      */
-    public function replace($string)
+    public function replace($string, $recursions = 0)
     {
-        return preg_replace_callback(Placeholder::NAME_REGEX, function ($matches) {
+        $replacementsDone = 0;
+
+        $string = preg_replace_callback(Placeholder::NAME_REGEX, function ($matches) {
             return $this->getValueForPlaceholder($matches[1]);
-        }, $string);
+        }, $string, -1, $replacementsDone);
+
+        if ($recursions and $replacementsDone) {
+            $string = $this->replace($string, $recursions - 1);
+        }
+
+        return $string;
     }
 }

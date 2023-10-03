@@ -26,8 +26,8 @@ class HTTPTest extends TestCase
 
         $header = HTTP::parseHeader($content);
 
-        $this->assertInternalType("array", $header[0]->cookies);
-        $this->assertInternalType("array", $header[0]->headers);
+        $this->assertIsArray($header[0]->cookies);
+        $this->assertIsArray($header[0]->headers);
 
         $this->assertEquals("1.1", $header[0]->version);
         $this->assertEquals(200, $header[0]->statusCode);
@@ -139,8 +139,8 @@ class HTTPTest extends TestCase
 
         $header = HTTP::parseHeader($content, true);
 
-        $this->assertTrue(empty($header[0]->headers));
-        $this->assertTrue(empty($header[0]->cookies));
+        $this->assertEmpty($header[0]->headers);
+        $this->assertEmpty($header[0]->cookies);
 
         $this->assertEquals("1.0", $header[0]->version);
         $this->assertEquals(200, $header[0]->statusCode);

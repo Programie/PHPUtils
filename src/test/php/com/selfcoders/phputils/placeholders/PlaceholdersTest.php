@@ -1,6 +1,7 @@
 <?php
 namespace com\selfcoders\phputils\placeholders;
 
+use com\selfcoders\phputils\placeholders\exception\UndefinedPlaceholderException;
 use PHPUnit\Framework\TestCase;
 
 class PlaceholdersTest extends TestCase
@@ -83,11 +84,10 @@ class PlaceholdersTest extends TestCase
         $this->assertEquals($expected, $placeholders->replace("placeholder1 is {{placeholder1}}", 3));
     }
 
-    /**
-     * @expectedException \com\selfcoders\phputils\placeholders\exception\UndefinedPlaceholderException
-     */
     public function testUndefinedPlaceholder()
     {
+        $this->expectException(UndefinedPlaceholderException::class);
+
         $placeholders = new Placeholders;
 
         $placeholders->append(new Placeholder("foo", "bar"));

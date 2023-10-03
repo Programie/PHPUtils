@@ -25,8 +25,8 @@ class ParserTest extends TestCase
 
         $this->assertEquals("value without option", $parser->getOption("", 0)->value);
 
-        $this->assertInternalType(IsType::TYPE_ARRAY, $parser->getOptions());
-        $this->assertInternalType(IsType::TYPE_ARRAY, $parser->getOptions()["-a"]);
+        $this->assertIsArray($parser->getOptions());
+        $this->assertIsArray($parser->getOptions()["-a"]);
         $this->assertInstanceOf("com\\selfcoders\\phputils\\commandlineoptions\\Option", $parser->getOptions()["-a"][0]);
     }
 }

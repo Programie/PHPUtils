@@ -3,6 +3,11 @@
   <testsuite name="tests">
     <directory>src/test/php</directory>
   </testsuite>
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src/main/php</directory>
+    </include>
+  </coverage>
   <php>
     <server name="HTTPS" value="on"/>
     <server name="HTTP_HOST" value="example.com"/>

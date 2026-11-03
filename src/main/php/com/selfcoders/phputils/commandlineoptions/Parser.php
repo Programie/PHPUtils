@@ -24,11 +24,11 @@ class Parser
                 continue;
             }
 
-            if (!isset($this->options[$option->name])) {
-                $this->options[$option->name] = array();
+            if (!isset($this->options[$option->name ?? ""])) {
+                $this->options[$option->name ?? ""] = array();
             }
 
-            $this->options[$option->name][] = $option;
+            $this->options[$option->name ?? ""][] = $option;
 
             if ($option->name and $option->value === "") {
                 $previousOption = $option;

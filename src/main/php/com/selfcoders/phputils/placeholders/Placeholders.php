@@ -9,7 +9,7 @@ class Placeholders extends ArrayObject
     /**
      * @param Placeholder $placeholder
      */
-    public function append($placeholder)
+    public function append($placeholder): void
     {
         /**
          * @var $thisPlaceholder Placeholder

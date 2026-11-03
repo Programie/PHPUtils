@@ -47,7 +47,7 @@ class HTTPCookie
             }
 
             $key = trim($key);
-            $value = trim($value);
+            $value = $value === null ? null : trim($value);
 
             // The first field is always the "name=value" pair
             if ($index == 0) {
